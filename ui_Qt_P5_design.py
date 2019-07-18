@@ -3,7 +3,7 @@
 # Form implementation generated from reading ui file 'Qt_P5_design.ui',
 # licensing of 'Qt_P5_design.ui' applies.
 #
-# Created: Thu Jul 18 14:19:48 2019
+# Created: Thu Jul 18 15:25:06 2019
 #      by: pyside2-uic  running on PySide2 5.13.0
 #
 # WARNING! All changes made in this file will be lost!
@@ -37,11 +37,11 @@ class Ui_MainWindow(object):
         self.lbTimeReal.setFont(font)
         self.lbTimeReal.setObjectName("lbTimeReal")
         self.horizontalLayout_2.addWidget(self.lbTimeReal)
-        self.SlTimeBarre = QtWidgets.QSlider(self.centralwidget)
-        self.SlTimeBarre.setMinimumSize(QtCore.QSize(20, 30))
-        self.SlTimeBarre.setOrientation(QtCore.Qt.Horizontal)
-        self.SlTimeBarre.setObjectName("SlTimeBarre")
-        self.horizontalLayout_2.addWidget(self.SlTimeBarre)
+        self.slTimeBarre = QtWidgets.QSlider(self.centralwidget)
+        self.slTimeBarre.setMinimumSize(QtCore.QSize(20, 30))
+        self.slTimeBarre.setOrientation(QtCore.Qt.Horizontal)
+        self.slTimeBarre.setObjectName("slTimeBarre")
+        self.horizontalLayout_2.addWidget(self.slTimeBarre)
         self.lbTimeTot = QtWidgets.QLabel(self.centralwidget)
         font = QtGui.QFont()
         font.setPointSize(11)

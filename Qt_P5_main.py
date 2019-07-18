@@ -1,8 +1,8 @@
 import sys
-from PySide2.QtWidgets import QApplication, QMainWindow
+from PySide2.QtWidgets import QApplication, QMainWindow, QFileDialog
 from ui_Qt_P5_design import Ui_MainWindow #nom de la classe générée
-from PySide2.QtCore import QUrl
-from PySide2.QtMultimedia import QMediaPlayer, QMediaContent #QTime()
+from PySide2.QtCore import QUrl, QTime
+from PySide2.QtMultimedia import QMediaPlayer, QMediaContent
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -23,7 +23,10 @@ class MainWindow(QMainWindow):
         self.mediaPlayer = QMediaPlayer()
         self.mediaPlayer.setVideoOutput(self.ui.videoScreen)
 
-        self.temps = QTime()
+        self.mediaPlayer.durationChanged.connect(self.mediaDurationChanged)
+        self.mediaPlayer.positionChanged.connect(self.mediaPositionChanged)
+        self.ui.slTimeBarre.valueChanged.connect(self.timeBarreChanged)
+
 
 
         mediaContent = QMediaContent(QUrl.fromLocalFile("big_buck_bunny.avi"))
@@ -54,14 +57,26 @@ class MainWindow(QMainWindow):
         self.mediaPlayer.setVolume(self.ui.dlVolume.value())
         self.ui.lbVolumePourc.setText(str(self.ui.dlVolume.value())+"%")
 
-    #def tempTot(self:
-        self.mediaPlayer.durationChanged()
-        self.mediaPlayer.positionChanged()
+    def mediaDurationChanged(self):
+        mediaDuration = self.mediaPlayer.duration()
+        self.ui.slTimeBarre.setRange(0,mediaDuration)
+        totTime = QTime(0,0,0)
+        totTime = totTime.addMSecs(mediaDuration)
+        self.ui.lbTimeTot.setText(totTime.toString("HH:mm:ss"))
 
-        # self.temps = QTime()
-        # self.temps.setMinimumTime(QTime(0, 0, 0));
-        # self.temps->setMaximumTime(QTime(16, 0, 0));
-        # self.temps->setDisplayFormat(QString("hh:mm:ss"));
+    def mediaPositionChanged(self):
+        # self.ui.slTimeBarre.valueChanged.disconnect(self.timeBarreChanged)
+        mediaPosition = self.mediaPlayer.position()
+        self.ui.slTimeBarre.setValue(mediaPosition)
+        currentTime = QTime(0,0,0)
+        currentTime = currentTime.addMSecs(mediaPosition)
+        self.ui.lbTimeReal.setText(currentTime.toString("HH:mm:ss"))
+        # self.ui.slTimeBarre.valueChanged.connect(self.timeBarreChanged)
+
+    def timeBarreChanged(self):
+        self.mediaPlayer.positionChanged.disconnect(self.mediaPositionChanged)
+        self.mediaPlayer.setPosition(self.ui.slTimeBarre.value())
+        self.mediaPlayer.positionChanged.connect(self.mediaPositionChanged)
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

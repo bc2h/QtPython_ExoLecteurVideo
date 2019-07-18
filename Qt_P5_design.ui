@@ -48,7 +48,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QSlider" name="SlTimeBarre">
+         <widget class="QSlider" name="slTimeBarre">
           <property name="minimumSize">
            <size>
             <width>20</width>
