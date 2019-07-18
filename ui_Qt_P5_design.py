@@ -3,7 +3,7 @@
 # Form implementation generated from reading ui file 'Qt_P5_design.ui',
 # licensing of 'Qt_P5_design.ui' applies.
 #
-# Created: Thu Jul 18 15:25:06 2019
+# Created: Thu Jul 18 17:04:26 2019
 #      by: pyside2-uic  running on PySide2 5.13.0
 #
 # WARNING! All changes made in this file will be lost!
@@ -114,7 +114,7 @@ class Ui_MainWindow(object):
         self.lbListFilm.setFont(font)
         self.lbListFilm.setObjectName("lbListFilm")
         self.verticalLayout_3.addWidget(self.lbListFilm)
-        self.listFilm = QtWidgets.QListView(self.centralwidget)
+        self.listFilm = QtWidgets.QListWidget(self.centralwidget)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)

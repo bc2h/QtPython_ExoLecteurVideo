@@ -48,8 +48,11 @@ class MainWindow(QMainWindow):
         print("Précédent")
     def suivClicked(self):
         print("Suivant")
+
     def ajoutClicked(self):
         print("Ajout")
+        self.ui.listFilm.addItem(QFileDialog.getOpenFileName()[0])
+
     def supprClicked(self):
         print("Supprime")
     def volumeChange(self):
@@ -65,18 +68,19 @@ class MainWindow(QMainWindow):
         self.ui.lbTimeTot.setText(totTime.toString("HH:mm:ss"))
 
     def mediaPositionChanged(self):
-        # self.ui.slTimeBarre.valueChanged.disconnect(self.timeBarreChanged)
+        self.ui.slTimeBarre.valueChanged.disconnect(self.timeBarreChanged)
         mediaPosition = self.mediaPlayer.position()
         self.ui.slTimeBarre.setValue(mediaPosition)
         currentTime = QTime(0,0,0)
         currentTime = currentTime.addMSecs(mediaPosition)
         self.ui.lbTimeReal.setText(currentTime.toString("HH:mm:ss"))
-        # self.ui.slTimeBarre.valueChanged.connect(self.timeBarreChanged)
+        self.ui.slTimeBarre.valueChanged.connect(self.timeBarreChanged)
 
     def timeBarreChanged(self):
         self.mediaPlayer.positionChanged.disconnect(self.mediaPositionChanged)
         self.mediaPlayer.setPosition(self.ui.slTimeBarre.value())
         self.mediaPlayer.positionChanged.connect(self.mediaPositionChanged)
+
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

@@ -230,7 +230,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QListView" name="listFilm">
+       <widget class="QListWidget" name="listFilm">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
           <horstretch>0</horstretch>
