@@ -2,7 +2,7 @@ import sys
 from PySide2.QtWidgets import QApplication, QMainWindow
 from ui_Qt_P5_design import Ui_MainWindow #nom de la classe générée
 from PySide2.QtCore import QUrl
-from PySide2.QtMultimedia import QMediaPlayer, QMediaContent
+from PySide2.QtMultimedia import QMediaPlayer, QMediaContent #QTime()
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -19,10 +19,11 @@ class MainWindow(QMainWindow):
         self.ui.pbAjout.clicked.connect(self.ajoutClicked)
         self.ui.pbSuppr.clicked.connect(self.supprClicked)
         self.ui.dlVolume.valueChanged.connect(self.volumeChange)
+
         self.mediaPlayer = QMediaPlayer()
         self.mediaPlayer.setVideoOutput(self.ui.videoScreen)
-        # self.ui.lbTimeTot.setText(self.ui.mediaPlayer.duration())
-        # self.ui.SlTimeBarre
+
+        self.temps = QTime()
 
 
         mediaContent = QMediaContent(QUrl.fromLocalFile("big_buck_bunny.avi"))
@@ -53,6 +54,14 @@ class MainWindow(QMainWindow):
         self.mediaPlayer.setVolume(self.ui.dlVolume.value())
         self.ui.lbVolumePourc.setText(str(self.ui.dlVolume.value())+"%")
 
+    #def tempTot(self:
+        self.mediaPlayer.durationChanged()
+        self.mediaPlayer.positionChanged()
+
+        # self.temps = QTime()
+        # self.temps.setMinimumTime(QTime(0, 0, 0));
+        # self.temps->setMaximumTime(QTime(16, 0, 0));
+        # self.temps->setDisplayFormat(QString("hh:mm:ss"));
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
