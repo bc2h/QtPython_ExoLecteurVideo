@@ -1,7 +1,7 @@
 import sys
-from PySide2.QtWidgets import QApplication, QMainWindow, QFileDialog
+from PySide2.QtWidgets import QApplication, QMainWindow, QFileDialog, QListWidgetItem
 from ui_Qt_P5_design import Ui_MainWindow #nom de la classe générée
-from PySide2.QtCore import QUrl, QTime
+from PySide2.QtCore import QUrl, QTime, QFileInfo
 from PySide2.QtMultimedia import QMediaPlayer, QMediaContent
 
 class MainWindow(QMainWindow):
@@ -16,7 +16,7 @@ class MainWindow(QMainWindow):
         self.ui.pbStop.clicked.connect(self.stopClicked)
         self.ui.pbPreced.clicked.connect(self.precedClicked)
         self.ui.pbSuiv.clicked.connect(self.suivClicked)
-        self.ui.pbAjout.clicked.connect(self.ajoutClicked)
+        self.ui.pbAjout.clicked.connect(self.ajoutClicked2)
         self.ui.pbSuppr.clicked.connect(self.supprClicked)
         self.ui.dlVolume.valueChanged.connect(self.volumeChange)
 
@@ -27,9 +27,11 @@ class MainWindow(QMainWindow):
         self.mediaPlayer.positionChanged.connect(self.mediaPositionChanged)
         self.ui.slTimeBarre.valueChanged.connect(self.timeBarreChanged)
 
+        self.ui.listFilm.itemClicked.connect(self.filmSelectSC)
 
-
-        mediaContent = QMediaContent(QUrl.fromLocalFile("big_buck_bunny.avi"))
+    def filmSelectSC(self): #simple clique
+        currentItem = self.ui.listFilm.currentItem()
+        mediaContent = QMediaContent(QUrl.fromLocalFile(currentItem.toolTip()))
         self.mediaPlayer.setMedia(mediaContent)
 
     def lectClicked(self):
@@ -37,11 +39,11 @@ class MainWindow(QMainWindow):
         self.mediaPlayer.play()
 
     def pauseClicked(self):
-        print("Pause")
+        #print("Pause")
         self.mediaPlayer.pause()
 
     def stopClicked(self):
-        print("Stop")
+        #print("Stop")
         self.mediaPlayer.stop()
 
     def precedClicked(self):
@@ -49,14 +51,23 @@ class MainWindow(QMainWindow):
     def suivClicked(self):
         print("Suivant")
 
-    def ajoutClicked(self):
-        print("Ajout")
-        self.ui.listFilm.addItem(QFileDialog.getOpenFileName()[0])
+    def ajoutClicked2(self):
+        print("Ajout2")
+        nomMedia = QFileDialog.getOpenFileName(self, "Choix Film", "C:/Users/AELION/BCH/Qt_interface_graphique/QtPython_ExoLecteurVideo", "Movie Files(*.avi *.mp4)")
+        fInfo = QFileInfo(nomMedia[0])
+        fShortName = fInfo.baseName()
+        item = QListWidgetItem(fShortName)
+        item.setToolTip(nomMedia[0]) #permet en plus d'afficher bandeau info fichier quand survol souris
+        self.ui.listFilm.addItem(item)
 
     def supprClicked(self):
         print("Supprime")
+        supprFilm = self.ui.listFilm.removeItemWidget()
+        if removeItemWidget != -1:   #-1 retourner quand rien à supprimer, sinon bug
+            self.ui.listFilm.takeItem(supprFilm)
+
     def volumeChange(self):
-        print("Volume %s" %self.ui.dlVolume.value())
+        #print("Volume %s" %self.ui.dlVolume.value())
         self.mediaPlayer.setVolume(self.ui.dlVolume.value())
         self.ui.lbVolumePourc.setText(str(self.ui.dlVolume.value())+"%")
 
