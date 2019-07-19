@@ -34,7 +34,7 @@ class MainWindow(QMainWindow):
 
     def filmSelectDC(self): #double clique
         currentItem = self.ui.listFilm.currentItem()
-        mediaContent = QMediaContent(QUrl.fromLocalFile(currentItem.text()))
+        mediaContent = QMediaContent(QUrl.fromLocalFile(currentItem.toolTip()))  #currentItem.text() si ajoutClicked
         self.mediaPlayer.setMedia(mediaContent)
         self.lectClicked()
 
@@ -61,11 +61,6 @@ class MainWindow(QMainWindow):
         #print("Stop")
         self.mediaPlayer.stop()
 
-    def precedClicked(self):
-        print("Précédent")
-    def suivClicked(self):
-        print("Suivant")
-
     # def ajoutClicked(self):
     #     print("Ajout")
     #     ajoutFilm = QFileDialog.getOpenFileName(self, "Choix Film", "C:/Users/AELION/BCH/Qt_interface_graphique/QtPython_ExoLecteurVideo", "Movie Files(*.avi *.mp4)")
@@ -73,8 +68,10 @@ class MainWindow(QMainWindow):
     #     self.ui.listFilm.addItem(item)
 
     def ajoutClicked2(self):
-        print("Ajout2")
+        # print("Ajout2")
         nomMedia = QFileDialog.getOpenFileName(self, "Choix Film", "C:/Users/AELION/BCH/Qt_interface_graphique/QtPython_ExoLecteurVideo", "Movie Files(*.avi *.mp4)")
+        if nomMedia[0] == "":  # si aucun fichier selectionné pour éviter l'affichage d'une ligne vide dans la liste
+            return
         fInfo = QFileInfo(nomMedia[0])
         fShortName = fInfo.baseName()
         item = QListWidgetItem(fShortName)
@@ -82,9 +79,9 @@ class MainWindow(QMainWindow):
         self.ui.listFilm.addItem(item)
 
     def supprClicked(self):
-        print("Supprime")
-        supprFilm = self.ui.listFilm.removeItemWidget()
-        if removeItemWidget != -1:   #-1 retourner quand rien à supprimer, sinon bug
+        # print("Supprime")
+        supprFilm = self.ui.listFilm.currentRow()
+        if supprFilm != -1:   #-1 retourner quand rien à supprimer, sinon bug
             self.ui.listFilm.takeItem(supprFilm)
 
     def volumeChange(self):
@@ -113,6 +110,10 @@ class MainWindow(QMainWindow):
         self.mediaPlayer.setPosition(self.ui.slTimeBarre.value())
         self.mediaPlayer.positionChanged.connect(self.mediaPositionChanged)
 
+    def precedClicked(self):
+        print("Précédent")
+    def suivClicked(self):
+        print("Suivant")
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
